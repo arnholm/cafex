@@ -74,6 +74,12 @@ public:
    // create directory
    static void create_directory(const std::string& dir_path, bool throw_if_exists = true);
 
+   // return last file modification time
+   time_t last_write_time();
+
+   // set last file modification time
+   void set_last_write_time(const time_t new_time);
+
 private:
    boost::filesystem::path m_path;
 };

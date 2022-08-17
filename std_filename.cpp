@@ -119,3 +119,13 @@ void std_filename::RemoveFile()
 {
    boost::filesystem::remove(m_path);
 }
+
+time_t std_filename::last_write_time()
+{
+   return boost::filesystem::last_write_time(m_path);
+}
+
+void std_filename::set_last_write_time(const time_t new_time)
+{
+   boost::filesystem::last_write_time(m_path,new_time);
+}
