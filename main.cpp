@@ -23,6 +23,7 @@ int compare_times(const std::string& template_file, const std::string& config_di
    {
        example_name
       ,"Connections"
+      ,"Params"
       ,"Mappings"
       ,"Configuration"
    };
@@ -72,6 +73,7 @@ int export_from_template(const std::string& template_file, const std::string& ou
 
             std::string out_name;
             if     (command == "Example")       out_name = fname.GetName() + ".txt";
+            else if(command == "Params")        out_name = command + ".txt";
             else if(command == "Connections")   out_name = command + ".txt";
             else if(command == "Mappings")      out_name = command + ".txt";
             else if(command == "Configuration") out_name = command + ".txt";
@@ -134,19 +136,20 @@ int import_to_template(const std::string& config_dir)
    }
 
    std::cout << "importing from '"<< config_dir  << "' to '" << template_file << "'" << std::endl;
-   std::vector<std::string> file_names =
+   std::vector<std::string> file_name_candidates =
    {
        example_name
+      ,"Params"
       ,"Connections"
       ,"Mappings"
       ,"Configuration"
    };
 
-   for(auto file_name : file_names) {
+   std::vector<std::string> file_names;
+   for(auto file_name : file_name_candidates) {
       std::string file_path = config_dir + '/' + file_name + ".txt";
-      if(!std_filename::Exists(file_path)) {
-         std::cout << "Error, file does not exist : " << file_path << std::endl;
-         return 1;
+      if(std_filename::Exists(file_path)) {
+         file_names.push_back(file_name);
       }
    }
 
